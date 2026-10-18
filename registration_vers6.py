@@ -46,7 +46,8 @@ def admin_panel():
     print('ADMIN MENU')
     print('1. User List')
     print('2. Delete User')
-    print('3. Add User')  # ДОДЕЛАТЬ
+    print('3. Add User') # ДОДЕЛАТЬ
+    print('4. Exit')
     action = input('What’s next (1/2/3)?: ')
 
     if action == '1':
@@ -83,13 +84,23 @@ def admin_panel():
         if back == 'y':
             admin_panel()
 
+    elif action == '4':
+        logout = input('Do you want to go out? (y/n)? ')
+        if logout == 'y':
+            print('Exit complete')
+            main()
+        else:
+            admin_panel()
+    elif action == '3':
+        add_user()
+        count = 0
+        for user in crud.read_users():
+            count += 1
+            print(f'{count}) User ID:', user[0], '| User Name:', user[1], '| User Password: ****')
+        admin_panel()
 
 
 
-
-    #
-    # elif action == '2':
-    #     add_user()
 
 
 def user_panel():  # ДОДЕЛАТЬ (функция изменить пароль и еще придумать что-нибудь)
@@ -99,22 +110,14 @@ def user_panel():  # ДОДЕЛАТЬ (функция изменить паро�
     print('3. At work')
 
 
-#
-# def add_user():
-#     print('ADD A NEW USER')
-#     name = input('Enter user name: ')
-#     password = input('Enter user password: ')
-#     for user in bd:
-#         if name == user['Name'] and password == user['Password']:
-#             print("That user already exists. Please choose a different username or password!")
-#             add_user()
-#             return
-#     bd.append({'Name': name, 'Password': password})
-#     save_users(bd)
-#     print(f"User {name} added!")
-#     back = input('Return to the admin panel? (y/n)? ')
-#     if back == 'y':
-#         admin_panel()
+
+def add_user():
+     print('ADD A NEW USER')
+     name = input('Enter user name: ')
+     password = input('Enter user password: ')
+     crud.create_user(name, password)
+     print(f'User {name} successfully added!')
+
 
 
 if __name__ == '__main__':
