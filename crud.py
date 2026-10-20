@@ -81,7 +81,14 @@ def read_users():
 def delete_user(id):
     connection = sqlite3.connect('users.db')
     cursor = connection.cursor()
-    check_id = cursor.execute("DELETE FROM Users WHERE id = ?", (id,)).fetchone()
+    cursor.execute("DELETE FROM Users WHERE id = ?", (id,))
     connection.commit()
     connection.close()
-    return check_id
+
+
+def change_password(username, new_password):
+    connection = sqlite3.connect('users.db')
+    cursor = connection.cursor()
+    cursor.execute("UPDATE Users SET password = ? WHERE username = ?", (new_password, username))
+    connection.commit()
+    connection.close()
